@@ -1,21 +1,86 @@
+# =============================================================================
+# PneumoAI — Docker Compose (Triton Edition)
+# =============================================================================
+# Services
+#   triton   — NVIDIA Triton Inference Server (primary ML engine)
+#   backend  — FastAPI + TensorFlow (Grad-CAM + Groq + fallback inference)
+#   frontend — React/Vite served by Nginx
+#
+# IMPORTANT: Run the model conversion script BEFORE first compose up:
+#   python scripts/convert_models.py
+#
+# Usage:
+#   docker compose up --build
+# =============================================================================
+
 services:
+
+  # ---------------------------------------------------------------------------
+  # Triton Inference Server
+  # ---------------------------------------------------------------------------
+  triton:
+    image: nvcr.io/nvidia/tritonserver:24.01-tf2-py3
+    # --strict-model-config=false lets Triton auto-complete config if tensor
+    # names in config.pbtxt are slightly off; the convert script provides exact
+    # names so this is a safety net only.
+    command: >
+      tritonserver
+      --model-repository=/models
+      --strict-model-config=false
+      --log-verbose=0
+    volumes:
+      - ./model_repository:/models:ro
+    ports:
+      - "8000:8000"   # HTTP inference + health
+      - "8001:8001"   # gRPC inference
+      - "8002:8002"   # Metrics (Prometheus)
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8000/v2/health/ready"]
+      interval: 20s
+      timeout: 15s
+      retries: 15
+      start_period: 120s   # Triton needs time to load large TF models
+    restart: unless-stopped
+    # Uncomment the block below ONLY if you have an NVIDIA GPU + nvidia-docker2:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ---------------------------------------------------------------------------
+  # FastAPI Backend
+  # ---------------------------------------------------------------------------
   backend:
-    image: rituraj1104/pneumoai-backend:latest
+    image: rituraj1104/pneumoai-backend:triton
     build:
       context: .
       dockerfile: backend/Dockerfile
     env_file:
       - backend/.env
+    environment:
+      - TRITON_URL=http://triton:8000
+      - USE_TRITON=true
+      - PORT=5000
     ports:
       - "5000:5000"
+    depends_on:
+      triton:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health').read()"]
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health').read()"]
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 45s
+      start_period: 60s
     restart: unless-stopped
 
+  # ---------------------------------------------------------------------------
+  # React Frontend (Nginx)
+  # ---------------------------------------------------------------------------
   frontend:
     image: rituraj1104/pneumoai-frontend:latest
     build:
@@ -27,3 +92,6 @@ services:
       backend:
         condition: service_healthy
     restart: unless-stopped
+
+# All services share the default bridge network created by Compose.
+# The hostname "triton" resolves to the triton service inside that network.

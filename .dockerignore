@@ -19,3 +19,8 @@ backend/*.out.log
 Assests
 screenshots
 run.txt
+# Triton model repository — mounted as a Docker volume, NOT baked into image
+model_repository
+# Notebooks and scripts not needed inside the container
+*.ipynb
+scripts/

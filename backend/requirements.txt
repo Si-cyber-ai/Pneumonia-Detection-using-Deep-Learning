@@ -7,3 +7,5 @@ python-dotenv
 python-multipart
 tensorflow==2.20.0
 uvicorn
+# Triton Inference Server HTTP client (self-contained, no extra transport dep needed)
+tritonclient[http]>=2.40.0
