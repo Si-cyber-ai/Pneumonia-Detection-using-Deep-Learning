@@ -1,5 +1,6 @@
 services:
   backend:
+    image: rituraj1104/pneumoai-backend:latest
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -16,6 +17,7 @@ services:
     restart: unless-stopped
 
   frontend:
+    image: rituraj1104/pneumoai-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile

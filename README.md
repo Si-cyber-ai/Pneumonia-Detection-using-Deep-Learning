@@ -204,6 +204,18 @@ This repository already includes:
 docker compose up --build
 ```
 
+### Published image tags
+
+- `rituraj1104/pneumoai-backend:latest`
+- `rituraj1104/pneumoai-frontend:latest`
+
+### Pull the images directly
+
+```powershell
+docker pull rituraj1104/pneumoai-backend:latest
+docker pull rituraj1104/pneumoai-frontend:latest
+```
+
 ### Services
 
 - Frontend: `http://localhost:5173`
