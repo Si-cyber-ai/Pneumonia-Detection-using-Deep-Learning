@@ -1,0 +1,9 @@
+fastapi
+groq
+numpy
+opencv-python
+pydantic
+python-dotenv
+python-multipart
+tensorflow==2.20.0
+uvicorn

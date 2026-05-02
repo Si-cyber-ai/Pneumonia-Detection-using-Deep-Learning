@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-paper: #f4f7f5;
+  --color-paper-strong: #ffffff;
+  --color-panel: rgba(255, 255, 255, 0.78);
+  --color-panel-muted: rgba(248, 250, 248, 0.92);
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.14);
+  --color-ink: #0f172a;
+  --color-ink-soft: #334155;
+  --color-copy: #475569;
+  --color-copy-muted: #64748b;
+  --color-brand: #0f766e;
+  --color-brand-deep: #0f3d3c;
+  --color-brand-soft: rgba(15, 118, 110, 0.12);
+  --color-alert: #b45309;
+  --color-danger: #b91c1c;
+  --shadow-panel: 0 18px 48px rgba(15, 23, 42, 0.08);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Manrope', system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 32%),
+    radial-gradient(circle at top right, rgba(251, 146, 60, 0.12), transparent 26%),
+    linear-gradient(180deg, #edf3f0 0%, #f8faf8 38%, #eef3f1 100%);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(15, 118, 110, 0.18);
+  color: var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.38);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 118, 110, 0.52);
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
+}
+
+.font-label {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.panel-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 28px;
+  box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(14px);
+}
+
+.panel-muted {
+  background: var(--color-panel-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+}
+
+.section-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-copy-muted);
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 8px 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-brand-deep);
+}
+
+.eyebrow-pill::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0f766e, #0f3d3c);
+  box-shadow: 0 0 0 5px rgba(15, 118, 110, 0.1);
+}
+
+.subtle-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.subtle-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 90%);
+  pointer-events: none;
+}
+
+.soft-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.14), transparent);
+}

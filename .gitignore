@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+backend/venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Logs and temp
+*.log
+logs/
+.tmp/
+*.tmp
+*.bak
+*.swp
+run.txt
+
+# Coverage and test cache
+.coverage
+coverage.xml
+.pytest_cache/
+htmlcov/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# Node/frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.vite/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ML artifacts
+models/*.keras
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.ckpt
+checkpoints/
+runs/
+mlruns/
+wandb/
+
+# Local datasets
+chest_xray/
+train/
+test/
+val/
